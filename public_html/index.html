@@ -12,8 +12,75 @@ and open the template in the editor.
         <script src="js/jquery-3.1.1.js" type="text/javascript"></script>
         <script src="js/jquery-ui.js" type="text/javascript"></script>
         <link href="css/global.css" rel="stylesheet" type="text/css"/>
+        <style>
+            #map_container {
+                padding: 16px;
+                border: 1px solid darkblue;
+            }
+            
+            #map td {
+                width: 40px;
+                height: 32px;
+                border: 2px solid black;
+            }
+            #map td>input {
+                /*width: auto;
+                height: auto;*/
+                width: 90%;
+                padding: 0;
+                margin: auto;
+            }
+            
+        </style>
     </head>
     <body>
-        <div>TODO write content</div>
+       
+        <div>
+            <input type="text" id="resize_x"/>
+            <input type="text" id="resize_y"/>
+            <button id="resize_confirm" onclick="resizeMap()">Resize map</button>
+        </div>
+        
+        <div id="map_container">
+            <table id="map">
+                
+            </table>
+        </div>
+        
+    <script>
+        
+        function resizeMap()
+        {
+            
+            //TODO: proper truncation of existing table
+                        
+            //really we're CREATING a map here
+            for(var i = 0; i < $('#resize_x').val() ; i++)
+            {
+                //create tr
+                
+                var tr = $("<tr></tr>");
+                $('#map').append(tr);
+                
+                //var tr = $('#map').append("<tr></tr>");
+                
+                for(var j = 0; j < $('#resize_y').val(); j++)
+                {
+                    //create td with form
+                    var td = $("<td></td>");
+                    td.append("<input type='number' />");  
+                    tr.append(td);
+                }
+                
+                
+            }
+            
+            
+        }
+        
+        
+    </script>
     </body>
+    
+    
 </html>
