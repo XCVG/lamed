@@ -118,42 +118,103 @@ and open the template in the editor.
         </div>
     <script>
         
+        var C_DEFAULT_MAP_TILE = 0;
+        
+        var map_array = new Array();
+        var map_rows;
+        var map_columns;
+        
         function resizeMap()
         {
+            map_columns = $('#resize_x').val();
+            map_rows = $('#resize_y').val();
             
-            //if map has children, resize
-            if($('#map').children().length > 0)
+            resizeMapArray();
+            resizeMapTable();
+            updateMapTableFromArray();
+        }
+        
+        function resizeMapArray()
+        {
+            //resize the map array itself
+            
+            //deal with rows first
+            if(map_rows > map_array.length)
             {
-                console.log("resizing isn't supported yet!")
-                
-                //count rows and truncate or extend
-                
-                //count columns, then iterate through and truncate or extend
-            }
-            else
-            {
-                //else create a new map
-                for(var i = 0; i < $('#resize_x').val() ; i++)
+                //we need to extend
+                for(var row = map_array.length; row < map_rows; row++)
                 {
-                    //create tr
-
-                    var tr = $("<tr></tr>");
-                    $('#map').append(tr);
-
-                    //var tr = $('#map').append("<tr></tr>");
-
-                    for(var j = 0; j < $('#resize_y').val(); j++)
-                    {
-                        //create td with form
-                        var td = $("<td></td>");
-                        td.append("<input type='number' />");  
-                        tr.append(td);
-                    }
-
-
+                    map_array.push(new Array());
                 }
-            }           
+            }
+            else if(map_rows < map_array.length)
+            {
+                //we need to contract
+                for(var row = map_array.length - 1; row >= map_rows; row--)
+                {
+                    map_array.pop();
+                }
+            }
             
+            //then deal with columns
+            for(var row = 0; row < map_array.length; row++)
+            {
+                var this_row = map_array[row];
+                
+                if(map_columns > this_row.length)
+                {
+                    //we need to expand the row
+                    for(var col = this_row.length; col < map_columns; col++)
+                    {
+                        this_row.push(C_DEFAULT_MAP_TILE);
+                    }
+                }
+                else if(map_columns < this_row.length)
+                {
+                    //we need to contract the row
+                    for(var col = this_row.length - 1; col >= map_columns; col--)
+                    {
+                        this_row.pop();
+                    }
+                }
+            }
+            
+            console.log(map_array);
+        }
+        
+        function resizeMapTable()
+        {
+            //destroy the existing table
+            $('#map').empty();
+            
+            //resize the map table
+            for(var i = 0; i < map_rows; i++)
+            {
+                //create tr
+
+                var tr = $("<tr></tr>");
+                $('#map').append(tr);
+
+                //var tr = $('#map').append("<tr></tr>");
+
+                for(var j = 0; j < map_columns; j++)
+                {
+                    //create td with form
+                    var td = $("<td></td>");
+                    td.append("<input type='number' />");  
+                    tr.append(td);
+                }
+            }
+        }
+        
+        function updateMapArrayFromTable()
+        {
+            //TODO copy values
+        }
+        
+        function updateMapTableFromArray()
+        {
+            //TODO copy values
         }
         
         
