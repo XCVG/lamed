@@ -124,6 +124,26 @@ and open the template in the editor.
         var map_rows;
         var map_columns;
         
+        function init()
+        {
+            console.log("Starting map editor...");
+            
+            $('#map').on('change', 'input', onTableChange);
+            
+            console.log("...done!");
+        }
+        
+        //EVENTS
+        
+        var onTableChange = function()
+        {
+            console.log("onTableChange fired!");
+            
+            updateMapArrayFromTable();
+        };
+       
+        //RESIZING AND UPDATING FUNCTIONS
+        
         function resizeMap()
         {
             map_columns = $('#resize_x').val();
@@ -209,14 +229,37 @@ and open the template in the editor.
         
         function updateMapArrayFromTable()
         {
-            //TODO copy values
+            //TODO this is the wrong thing!
+            for(var row = 0; row < map_array.length; row++)
+            {
+                var this_row = map_array[row];
+                
+                for(var col = 0; col < this_row.length; col++)
+                {
+                    var cell = $(($("#map")[0]).rows[row].cells[col]);
+                    //console.log(cell);
+                    this_row[col] = cell.children("input").val();
+                }
+            }
         }
         
         function updateMapTableFromArray()
         {
             //TODO copy values
+            for(var row = 0; row < map_array.length; row++)
+            {
+                var this_row = map_array[row];
+                
+                for(var col = 0; col < this_row.length; col++)
+                {
+                    var cell = $(($("#map")[0]).rows[row].cells[col]);
+                    //console.log(cell);
+                    cell.children("input").val(this_row[col]);
+                }
+            }
         }
         
+        init();
         
     </script>
     </body>
