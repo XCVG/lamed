@@ -105,8 +105,8 @@ and open the template in the editor.
                 <div class="toolbox_item">
                     <h2>Cell</h2>
                     
-                    <p>X: 1</p>
-                    <p>Y: 2</p>
+                    <p>X: <span id="toolbox_item_x">null</span></p>
+                    <p>Y: <span id="toolbox_item_y">null</span></p>
                 </div>
 
 
@@ -129,6 +129,7 @@ and open the template in the editor.
             console.log("Starting map editor...");
             
             $('#map').on('change', 'input', onTableChange);
+            $('#map').on('click', 'td', onTableClick);
             
             console.log("...done!");
         }
@@ -141,6 +142,34 @@ and open the template in the editor.
             
             updateMapArrayFromTable();
         };
+        
+        var onTableClick = function ()
+        {
+            console.log("onTableClick fired!");
+            
+            var col = $(this).parent().children().index($(this));
+            var row = $(this).parent().parent().children().index($(this).parent());
+            
+            //error handling of sorts
+            if(col < 0 || row < 0)
+                return;
+            
+            //TODO: should probably store currently selected cell somewhere
+        
+            updateToolboxCell($(this), col, row);
+        };
+        
+        //EDITOR FUNCTIONS
+        
+        function updateToolboxCell(cell, cellX, cellY)
+        {
+            console.log(cell);
+            console.log("X: " + cellX + " Y: " + cellY);
+
+            //update selected cell info: for now it's just X any Y but value will be added soon
+            $('#toolbox_item_x').text(cellX);
+            $('#toolbox_item_y').text(cellY);
+        }
        
         //RESIZING AND UPDATING FUNCTIONS
         
