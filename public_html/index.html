@@ -74,6 +74,11 @@ and open the template in the editor.
                 margin: auto;
             }
             
+            #bottom_json {
+                width:90%;
+                min-height: 100px;
+            }
+            
             
             
         </style>
@@ -114,7 +119,11 @@ and open the template in the editor.
         </div>
         
         <div id="bottom_container">
-            
+            <textarea id="bottom_json"></textarea>
+            <div>
+                <button id="json_save" onclick="saveJson()">Save</button>
+                <button id="json_load" onclick="loadJson()">Load</button>                
+            </div>
         </div>
     <script>
         
@@ -169,6 +178,22 @@ and open the template in the editor.
             //update selected cell info: for now it's just X any Y but value will be added soon
             $('#toolbox_item_x').text(cellX);
             $('#toolbox_item_y').text(cellY);
+        }
+        
+        //SAVE/LOAD
+        
+        function saveJson()
+        {
+            updateMapArrayFromTable();
+            
+            $('#bottom_json').val(JSON.stringify(map_array));
+        }
+        
+        function loadJson()
+        {
+            map_array = JSON.parse($('#bottom_json').val());
+            
+            updateMapTableFromArray();
         }
        
         //RESIZING AND UPDATING FUNCTIONS
